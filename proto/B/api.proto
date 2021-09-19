@@ -1,0 +1,18 @@
+syntax = "proto3";
+package backend_b;
+
+option go_package = "github.com/hirakiuc/proxy-sample/proto/B";
+
+service BackendB {
+  rpc SayBye (ByeRequest) returns (ByeReply);
+}
+
+// The request message containing the user's name.
+message ByeRequest {
+  string name = 1;
+}
+
+// The response message containing the message.
+message ByeReply {
+  string message = 1;
+}
