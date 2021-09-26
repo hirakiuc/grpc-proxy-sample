@@ -7,7 +7,22 @@ option go_package = "github.com/hirakiuc/proxy-sample/proto/proxy";
 import "A/api.proto";
 import "B/api.proto";
 
-service Proxy {
+service Bff {
+  rpc Greeting(GreetingRequest) returns (GreetingReply);
+}
+
+service BackendA {
   rpc SayHello(backend_a.HelloRequest) returns (backend_a.HelloReply);
+}
+
+service BackendB {
   rpc SayBye(backend_b.ByeRequest) returns (backend_b.ByeReply);
+}
+
+message GreetingRequest {
+  string name = 1;
+}
+
+message GreetingReply {
+  string message = 1;
 }
