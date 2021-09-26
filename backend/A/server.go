@@ -1,13 +1,12 @@
-package A
+package a
 
 import (
-	"github.com/hirakiuc/grpc-proxy-sample/backend/A/handler"
-
-	pb "github.com/hirakiuc/grpc-proxy-sample/proto/A"
-
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/hirakiuc/grpc-proxy-sample/backend/A/handler"
+	pb "github.com/hirakiuc/grpc-proxy-sample/proto/A"
 )
 
 type Config struct {

@@ -4,8 +4,6 @@ import (
 	"context"
 	"strings"
 
-	pb "github.com/hirakiuc/grpc-proxy-sample/proto/proxy"
-
 	grpc_proxy "github.com/mwitkow/grpc-proxy/proxy"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -13,6 +11,8 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
+
+	pb "github.com/hirakiuc/grpc-proxy-sample/proto/proxy"
 )
 
 type Config struct {

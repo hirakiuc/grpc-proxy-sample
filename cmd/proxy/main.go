@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/hirakiuc/grpc-proxy-sample/proxy"
 	"go.uber.org/zap"
+
+	"github.com/hirakiuc/grpc-proxy-sample/proxy"
 )
 
 const (
