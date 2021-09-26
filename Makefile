@@ -43,6 +43,9 @@ build_a: proto_gen
 build_b: proto_gen
 	go build -o ./bin/backend_b ./cmd/B/main.go
 
+.PHONY: build
+build: build_a build_b build_proxy
+
 .PHONY: devs
 devs:
 	go install -tags=tools ./tools/tools.go
