@@ -22,7 +22,7 @@ jobs:
         make dev-deps
         make deps
       env:
-        GOPRIVATE=github.com/hirakiuc/grpc-proxy-sample
+        GOPRIVATE: github.com/hirakiuc/grpc-proxy-sample
 
     - name: Build
       run: make build
