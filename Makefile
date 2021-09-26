@@ -1,7 +1,5 @@
-
-export PATH += $(`pwd`)/bin
-
-GOBIN=$(`pwd`)/bin
+export GOBIN=$(shell pwd)/bin
+export PATH += $(GOBIN)
 
 PROTO_PATH=./proto
 PROTO_OUTPUT=./proto
@@ -46,6 +44,11 @@ build_b: proto_gen
 .PHONY: build
 build: build_a build_b build_proxy
 
-.PHONY: devs
-devs:
-	go install -tags=tools ./tools/tools.go
+.PHONY: dev-deps
+dev-deps:
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+	go install google.golang.org/protobuf/cmd/protoc-gen-go
+
+.PHONY: deps
+deps:
+	go mod vendor
