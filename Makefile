@@ -52,3 +52,7 @@ dev-deps:
 .PHONY: deps
 deps:
 	go mod vendor
+
+.PHONY: lint
+lint:
+	golangci-lint run --config=.golangci.yml ./...

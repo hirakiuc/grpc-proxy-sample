@@ -1,0 +1,19 @@
+name: reviewdog
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  reviewdog:
+    name: reviewdog
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: golangci--lint
+      uses: reviewdog/action-golangci-lint@v2
+      with:
+        golangci_lint_flags: '--config=.golangci.yml ./...'
