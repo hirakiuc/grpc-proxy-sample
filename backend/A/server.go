@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type Config struct {
@@ -14,9 +15,7 @@ type Config struct {
 }
 
 func NewServer(conf *Config) (*grpc.Server, error) {
-	opts := []grpc.ServerOption{
-		// TODO
-	}
+	opts := []grpc.ServerOption{}
 
 	handlers := handler.NewHandler(conf.Logger)
 
@@ -27,6 +26,7 @@ func createServer(handlers pb.BackendAServer, opts ...grpc.ServerOption) *grpc.S
 	srv := grpc.NewServer(opts...)
 
 	pb.RegisterBackendAServer(srv, handlers)
+	reflection.Register(srv)
 
 	return srv
 }
