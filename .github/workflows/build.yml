@@ -24,6 +24,8 @@ jobs:
     - name: Install dependencies
       run: |
         make dev-deps
+        which protoc
+        which protoc-gen-go-grpc
         make deps
       env:
         GOPRIVATE: github.com/hirakiuc/grpc-proxy-sample
