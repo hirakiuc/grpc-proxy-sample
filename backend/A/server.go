@@ -1,9 +1,9 @@
 package A
 
 import (
-	"github.com/hirakiuc/proxy-sample/backend/A/handler"
+	"github.com/hirakiuc/grpc-proxy-sample/backend/A/handler"
 
-	pb "github.com/hirakiuc/proxy-sample/proto/A"
+	pb "github.com/hirakiuc/grpc-proxy-sample/proto/A"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc"

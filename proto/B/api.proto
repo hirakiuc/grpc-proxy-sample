@@ -1,7 +1,7 @@
 syntax = "proto3";
 package backend_b;
 
-option go_package = "github.com/hirakiuc/proxy-sample/proto/B";
+option go_package = "github.com/hirakiuc/grpc-proxy-sample/proto/B";
 
 service BackendB {
   rpc SayBye (ByeRequest) returns (ByeReply);

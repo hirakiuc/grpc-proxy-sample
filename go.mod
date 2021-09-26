@@ -1,4 +1,4 @@
-module github.com/hirakiuc/proxy-sample
+module github.com/hirakiuc/grpc-proxy-sample
 
 go 1.17
 

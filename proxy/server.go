@@ -4,13 +4,14 @@ import (
 	"context"
 	"strings"
 
-	pb "github.com/hirakiuc/proxy-sample/proto/proxy"
+	pb "github.com/hirakiuc/grpc-proxy-sample/proto/proxy"
 
 	grpc_proxy "github.com/mwitkow/grpc-proxy/proxy"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 )
 
@@ -19,6 +20,8 @@ type Config struct {
 }
 
 func NewServer(conf *Config) (*grpc.Server, error) {
+	director := createDirector()
+
 	opts := []grpc.ServerOption{
 		// https://pkg.go.dev/google.golang.org/grpc#CustomCodec
 		// Deprecated: register codecs using encoding.RegisterCodec.
@@ -26,16 +29,18 @@ func NewServer(conf *Config) (*grpc.Server, error) {
 		// See also https://github.com/grpc/grpc-go/blob/master/Documentation/encoding.md#using-a-codec.
 		// Will be supported throughout 1.x.
 		// grpc.CustomCodec(grpc_proxy.Codec()),
+
+		grpc.UnknownServiceHandler(grpc_proxy.TransparentHandler(director)),
 	}
 
-	return createServer(opts...), nil
+	return createServer(director, opts...), nil
 }
 
 func createDirector() grpc_proxy.StreamDirector {
 	return func(ctx context.Context, fullMethodName string) (context.Context, *grpc.ClientConn, error) {
 		backends := map[string]string{
-			"/proxy.BackendA": "backend_a",
-			"/proxy.BackendB": "backend_b",
+			"/proxy.BackendA": "localhost:50051",
+			"/proxy.BackendB": "localhost:50052",
 		}
 
 		const Sep = "/"
@@ -50,11 +55,12 @@ func createDirector() grpc_proxy.StreamDirector {
 		md, ok := metadata.FromIncomingContext(ctx)
 
 		// Copy the inbound metadata explicitly.
+		// nolint:govet
 		outCtx, _ := context.WithCancel(ctx)
 		outCtx = metadata.NewOutgoingContext(outCtx, md.Copy())
 
 		if ok {
-			conn, err := grpc.DialContext(ctx, addr, grpc.WithCodec(grpc_proxy.Codec()))
+			conn, err := grpc.DialContext(ctx, addr)
 
 			// nolint:wrapcheck
 			return outCtx, conn, err
@@ -76,10 +82,8 @@ func registerBackendServices(srv *grpc.Server, director grpc_proxy.StreamDirecto
 	}
 }
 
-func createServer(opts ...grpc.ServerOption) *grpc.Server {
+func createServer(director grpc_proxy.StreamDirector, opts ...grpc.ServerOption) *grpc.Server {
 	srv := grpc.NewServer(opts...)
-
-	director := createDirector()
 
 	backendDescs := []grpc.ServiceDesc{
 		pb.BackendA_ServiceDesc,
@@ -87,6 +91,7 @@ func createServer(opts ...grpc.ServerOption) *grpc.Server {
 	}
 
 	registerBackendServices(srv, director, backendDescs)
+	reflection.Register(srv)
 
 	return srv
 }

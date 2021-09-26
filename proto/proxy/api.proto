@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proxy;
 
-option go_package = "github.com/hirakiuc/proxy-sample/proto/proxy";
+option go_package = "github.com/hirakiuc/grpc-proxy-sample/proto/proxy";
 
 import "A/api.proto";
 import "B/api.proto";

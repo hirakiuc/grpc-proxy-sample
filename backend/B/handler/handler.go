@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/hirakiuc/proxy-sample/proto/B"
+	pb "github.com/hirakiuc/grpc-proxy-sample/proto/B"
 
 	"go.uber.org/zap"
 )

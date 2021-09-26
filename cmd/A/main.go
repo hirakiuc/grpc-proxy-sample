@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	backend "github.com/hirakiuc/proxy-sample/backend/A"
+	backend "github.com/hirakiuc/grpc-proxy-sample/backend/A"
 	"go.uber.org/zap"
 )
 
