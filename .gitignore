@@ -1,4 +1,4 @@
-proto/**/*.pb.go
+#proto/**/*.pb.go
 bin/*
 !bin/.gitkeep
 
