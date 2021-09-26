@@ -1,13 +1,12 @@
-package B
+package b
 
 import (
-	"github.com/hirakiuc/grpc-proxy-sample/backend/B/handler"
-
-	pb "github.com/hirakiuc/grpc-proxy-sample/proto/B"
-
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/hirakiuc/grpc-proxy-sample/backend/B/handler"
+	pb "github.com/hirakiuc/grpc-proxy-sample/proto/B"
 )
 
 type Config struct {
@@ -15,9 +14,7 @@ type Config struct {
 }
 
 func NewServer(conf *Config) (*grpc.Server, error) {
-	opts := []grpc.ServerOption{
-		// TODO
-	}
+	opts := []grpc.ServerOption{}
 
 	handlers := handler.NewHandler(conf.Logger)
 

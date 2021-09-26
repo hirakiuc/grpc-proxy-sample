@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/hirakiuc/grpc-proxy-sample/proto/A"
-
 	"go.uber.org/zap"
+
+	pb "github.com/hirakiuc/grpc-proxy-sample/proto/A"
 )
 
 type handlerImpl struct {
