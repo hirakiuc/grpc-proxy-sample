@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	A "github.com/hirakiuc/grpc-proxy-sample/proto/A"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
+
+	A "github.com/hirakiuc/grpc-proxy-sample/proto/A"
 )
 
 func RegisterBackendAHandlerWithBackendOption(ctx context.Context, srv *grpc.Server, target string, opts []grpc.DialOption) (err error) {
