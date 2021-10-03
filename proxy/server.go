@@ -21,7 +21,7 @@ type Config struct {
 }
 
 func NewServer(conf *Config) (*grpc.Server, error) {
-	director := createDirector()
+	director := createDirector(conf)
 
 	opts := []grpc.ServerOption{
 		// https://pkg.go.dev/google.golang.org/grpc#CustomCodec
@@ -69,12 +69,13 @@ func createDirector(conf *Config) grpc_proxy.StreamDirector {
 		md, ok := metadata.FromIncomingContext(ctx)
 
 		// Copy the inbound metadata explicitly.
-		// nolint:govet
 		outCtx, _ := context.WithCancel(ctx)
+		// defer cancel()
+
 		outCtx = metadata.NewOutgoingContext(outCtx, md.Copy())
 
 		if ok {
-			conn, err := grpc.DialContext(ctx, addr)
+			conn, err := grpc.DialContext(ctx, addr, grpc.WithInsecure())
 
 			// nolint:wrapcheck
 			return outCtx, conn, err
