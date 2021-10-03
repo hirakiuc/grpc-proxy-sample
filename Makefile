@@ -48,12 +48,13 @@ build_b: proto_gen
 build: build_a build_b build_proxy
 
 .PHONY: dev-deps
-dev-deps:
+dev-deps: deps
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 	go install google.golang.org/protobuf/cmd/protoc-gen-go
 
 .PHONY: deps
 deps:
+	go mod tidy
 	go mod vendor
 
 .PHONY: lint
