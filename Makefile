@@ -4,6 +4,8 @@ export PATH += $(GOBIN)
 PROTO_PATH=./proto
 PROTO_OUTPUT=./proto
 
+.DEFAULT_GOAL=build
+
 .PHONY: protoc_gen
 proto_gen:
 	@protoc --proto_path=$(PROTO_PATH) \
@@ -22,6 +24,7 @@ proto_gen:
 		--go_out=$(PROTO_OUTPUT) --go_opt=paths=source_relative \
 		--go-grpc_out=$(PROTO_OUTPUT) --go-grpc_opt=paths=source_relative \
 		--plugin=./bin/protoc-gen-go --plugin=./bin/protoc-gen-go-grpc \
+		--descriptor_set_out=$(PROTO_OUTPUT)/proxy/api.protoset --include_imports \
 		$(PROTO_PATH)/proxy/api.proto
 	@echo "Generated source files from $(PROTO_PATH)/proxy/api.proto."
 
