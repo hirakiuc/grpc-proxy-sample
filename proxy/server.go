@@ -4,6 +4,7 @@ import (
 	"context"
 	"strings"
 
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_proxy "github.com/mwitkow/grpc-proxy/proxy"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -30,24 +31,37 @@ func NewServer(conf *Config) (*grpc.Server, error) {
 		// Will be supported throughout 1.x.
 		// grpc.CustomCodec(grpc_proxy.Codec()),
 
+		grpc.UnaryInterceptor(grpc_zap.UnaryServerInterceptor(conf.Logger)),
+
 		grpc.UnknownServiceHandler(grpc_proxy.TransparentHandler(director)),
 	}
 
 	return createServer(director, opts...), nil
 }
 
-func createDirector() grpc_proxy.StreamDirector {
+func createDirector(conf *Config) grpc_proxy.StreamDirector {
+	log := conf.Logger
+
 	return func(ctx context.Context, fullMethodName string) (context.Context, *grpc.ClientConn, error) {
 		backends := map[string]string{
-			"/proxy.BackendA": "localhost:50051",
-			"/proxy.BackendB": "localhost:50052",
+			"proxy.BackendA": "localhost:50051",
+			"proxy.BackendB": "localhost:50052",
 		}
 
 		const Sep = "/"
 
 		parts := strings.Split(fullMethodName, Sep)
 
-		addr, ok := backends[parts[0]]
+		serviceName := parts[1]
+		methodName := parts[2]
+
+		log.Info(
+			"Receive a request",
+			zap.String("service", serviceName),
+			zap.String("method", methodName),
+		)
+
+		addr, ok := backends[serviceName]
 		if !ok {
 			return nil, nil, status.Errorf(codes.Unimplemented, "Unsupported service")
 		}

@@ -1,6 +1,7 @@
 package b
 
 import (
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -14,7 +15,9 @@ type Config struct {
 }
 
 func NewServer(conf *Config) (*grpc.Server, error) {
-	opts := []grpc.ServerOption{}
+	opts := []grpc.ServerOption{
+		grpc.UnaryInterceptor(grpc_zap.UnaryServerInterceptor(conf.Logger)),
+	}
 
 	handlers := handler.NewHandler(conf.Logger)
 
