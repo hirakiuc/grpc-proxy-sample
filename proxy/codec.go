@@ -33,7 +33,6 @@ type frame struct {
 	payload []byte
 }
 
-// nolint:forbidigo
 func (c *rawCodec) Marshal(v interface{}) ([]byte, error) {
 	out, ok := v.(*frame)
 	if !ok {

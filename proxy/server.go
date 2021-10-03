@@ -69,6 +69,7 @@ func createDirector(conf *Config) grpc_proxy.StreamDirector {
 		md, ok := metadata.FromIncomingContext(ctx)
 
 		// Copy the inbound metadata explicitly.
+		// nolint:govet
 		outCtx, _ := context.WithCancel(ctx)
 		// defer cancel()
 
