@@ -7,6 +7,7 @@ require (
 	github.com/mwitkow/grpc-proxy v0.0.0-20181017164139-0f1106ef9c76
 	go.uber.org/zap v1.19.1
 	google.golang.org/grpc v1.41.0
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.1.0
 	google.golang.org/protobuf v1.27.1
 )
 
