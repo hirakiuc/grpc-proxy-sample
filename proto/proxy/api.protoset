@@ -1,0 +1,31 @@
+
+å
+A/api.proto	backend_a""
+HelloRequest
+name (	Rname"&
+
+HelloReply
+message (	Rmessage2F
+BackendA:
+SayHello.backend_a.HelloRequest.backend_a.HelloReplyB/Z-github.com/hirakiuc/grpc-proxy-sample/proto/Abproto3
+Û
+B/api.proto	backend_b" 
+
+ByeRequest
+name (	Rname"$
+ByeReply
+message (	Rmessage2@
+BackendB4
+SayBye.backend_b.ByeRequest.backend_b.ByeReplyB/Z-github.com/hirakiuc/grpc-proxy-sample/proto/Bbproto3
+Œ
+proxy/api.protoproxyA/api.protoB/api.proto"%
+GreetingRequest
+name (	Rname")
+GreetingReply
+message (	Rmessage2?
+Bff8
+Greeting.proxy.GreetingRequest.proxy.GreetingReply2F
+BackendA:
+SayHello.backend_a.HelloRequest.backend_a.HelloReply2@
+BackendB4
+SayBye.backend_b.ByeRequest.backend_b.ByeReplyB3Z1github.com/hirakiuc/grpc-proxy-sample/proto/proxybproto3
